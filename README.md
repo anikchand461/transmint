@@ -1,6 +1,8 @@
 <div align="center">
 
-# 🎙️ Transmint
+<img src="frontend/assets/logo.png" alt="Transmint logo" width="110" />
+
+# Transmint
 
 **Turn meeting recordings, lectures and YouTube videos into transcripts and structured summaries.**
 

@@ -3,34 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#090b12">
+  <meta name="theme-color" content="#fbf8ef" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1f2624" media="(prefers-color-scheme: dark)">
   <title>Transmint</title>
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <link rel="apple-touch-icon" href="assets/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
-  <div class="backdrop" aria-hidden="true">
-    <span class="orb orb-a"></span>
-    <span class="orb orb-b"></span>
-    <span class="orb orb-c"></span>
-    <span class="grid-lines"></span>
-  </div>
-
   <header class="site-header">
     <div class="brand">
       <span class="logo" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 10v4"/><path d="M8 6v12"/><path d="M12 3v18"/><path d="M16 7v10"/><path d="M20 10v4"/></svg>
       </span>
       <span class="brand-name">Transmint</span>
     </div>
-    <p id="backend-status" class="status-line">Checking backend…</p>
+    <div class="header-actions">
+      <p id="backend-status" class="status-line">Checking backend…</p>
+      <a class="github-link" href="https://github.com/anikchand461/transmint" target="_blank" rel="noopener noreferrer" aria-label="View Transmint on GitHub" title="View on GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.39-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span class="github-label">GitHub</span>
+      </a>
+    </div>
   </header>
 
   <section class="hero">
-    <span class="eyebrow">Whisper transcription · AI summaries</span>
-    <h1>Turn recordings into <span class="gradient-text">clear notes</span></h1>
+    <span class="eyebrow"><span class="eyebrow-inner">Whisper transcription · AI summaries</span></span>
+    <h1>
+      <span class="word" style="--i:0">Turn</span>
+      <span class="word" style="--i:1">recordings</span>
+      <span class="word" style="--i:2">into</span>
+      <span class="word accent-word" style="--i:3">clear notes</span>
+    </h1>
     <p class="tagline">Transcribe meetings &amp; lectures from an audio file or a YouTube link, then get a summary with key points, decisions and action items.</p>
   </section>
 
@@ -38,9 +45,9 @@
     <div id="error" class="error" role="alert" hidden></div>
 
     <!-- 1. Choose input & transcribe -->
-    <section class="card card-input">
+    <section class="card card-input reveal">
       <div class="card-head">
-        <span class="step">1</span>
+        <span class="step">01</span>
         <div>
           <h2>Choose input</h2>
           <p class="card-sub">Upload audio or paste a YouTube link</p>
@@ -55,19 +62,18 @@
         </label>
         <label>
           <input type="radio" name="source" value="youtube">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></svg>
           YouTube link
         </label>
       </div>
 
-      <div id="file-panel">
+      <div id="file-panel" class="panel">
         <label id="drop-zone" class="drop-zone" for="file-input">
           <span class="drop-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
           </span>
-          <span class="drop-title">Drag &amp; drop your audio here</span>
-          <span class="drop-or">or</span>
-          <span class="button secondary">Browse files</span>
+          <span class="drop-title">Drop your audio here</span>
+          <span class="drop-or">or <span class="link-like">browse files</span></span>
           <span class="drop-hint">WAV · MP3 · M4A · FLAC · OGG · WEBM</span>
           <input id="file-input" type="file" accept=".wav,.mp3,.m4a,.flac,.ogg,.webm,audio/*">
         </label>
@@ -77,20 +83,23 @@
         </p>
       </div>
 
-      <div id="youtube-panel" hidden>
+      <div id="youtube-panel" class="panel" hidden>
         <label class="field">
           <span class="field-label">YouTube video URL</span>
           <input id="youtube-url" type="url" inputmode="url" autocomplete="off" maxlength="2048" placeholder="https://www.youtube.com/watch?v=...">
         </label>
-        <label class="checkbox">
+        <label class="switch">
           <input id="prefer-captions" type="checkbox" checked>
+          <span class="switch-track" aria-hidden="true"><span class="switch-thumb"></span></span>
           <span>Use the video's captions when available (faster); otherwise download audio and transcribe with Whisper</span>
         </label>
       </div>
 
-      <button id="transcribe-btn" type="button" class="primary block" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
-        Transcribe
+      <button id="transcribe-btn" type="button" class="primary block magnetic" disabled>
+        <span class="btn-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+          Transcribe
+        </span>
       </button>
       <p id="transcribe-progress" class="progress" hidden>
         <span class="spinner" aria-hidden="true"></span><span id="transcribe-progress-text">Uploading…</span>
@@ -99,9 +108,9 @@
 
     <div class="results">
       <!-- 2. Transcript -->
-      <section class="card">
+      <section class="card reveal">
         <div class="card-head">
-          <span class="step">2</span>
+          <span class="step">02</span>
           <div>
             <h2>Transcript</h2>
             <p id="transcript-meta" class="card-sub">No transcript yet.</p>
@@ -125,9 +134,9 @@
       </section>
 
       <!-- 3. Summary -->
-      <section class="card">
+      <section class="card reveal">
         <div class="card-head">
-          <span class="step">3</span>
+          <span class="step">03</span>
           <div>
             <h2>Summary</h2>
             <p class="card-sub">Pick a style and generate</p>
@@ -147,9 +156,11 @@
             <input id="output-language" type="text" maxlength="40" placeholder="e.g. English">
           </label>
         </div>
-        <button id="summarize-btn" type="button" class="primary block" disabled>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></svg>
-          Summarize
+        <button id="summarize-btn" type="button" class="primary block magnetic" disabled>
+          <span class="btn-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></svg>
+            Summarize
+          </span>
         </button>
         <p id="summarize-progress" class="progress" hidden>
           <span class="spinner" aria-hidden="true"></span><span>Generating summary…</span>
@@ -170,9 +181,10 @@
   </main>
 
   <footer class="site-footer">
-    <p>Transmint · Whisper transcription &amp; AI summaries</p>
+    <p>Transmint · Whisper transcription &amp; AI summaries · <a href="https://github.com/anikchand461/transmint" target="_blank" rel="noopener noreferrer">anikchand461/transmint</a></p>
   </footer>
 
   <script src="script.js"></script>
+  <script src="effects.js?v=1"></script>
 </body>
 </html>

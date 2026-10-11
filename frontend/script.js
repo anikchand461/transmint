@@ -151,6 +151,8 @@ els.sourceRadios.forEach((radio) =>
     updateButtons();
   }),
 );
+// Browsers may restore the last-checked radio on reload without firing "change"; sync the panels to it.
+document.querySelector('input[name="source"]:checked')?.dispatchEvent(new Event("change"));
 els.youtubeUrl.addEventListener("input", updateButtons);
 els.youtubeUrl.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !els.transcribeBtn.disabled) els.transcribeBtn.click();
