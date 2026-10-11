@@ -2,94 +2,176 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090b12">
   <title>Transmint</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
-  <header>
-    <h1>Transmint</h1>
-    <p class="tagline">Transcribe meetings &amp; lectures, then summarize them.</p>
+  <div class="backdrop" aria-hidden="true">
+    <span class="orb orb-a"></span>
+    <span class="orb orb-b"></span>
+    <span class="orb orb-c"></span>
+    <span class="grid-lines"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10v4M8 6v12M12 3v18M16 7v10M20 10v4"/></svg>
+      </span>
+      <span class="brand-name">Transmint</span>
+    </div>
     <p id="backend-status" class="status-line">Checking backend…</p>
   </header>
 
-  <main>
+  <section class="hero">
+    <span class="eyebrow">Whisper transcription · AI summaries</span>
+    <h1>Turn recordings into <span class="gradient-text">clear notes</span></h1>
+    <p class="tagline">Transcribe meetings &amp; lectures from an audio file or a YouTube link, then get a summary with key points, decisions and action items.</p>
+  </section>
+
+  <main class="layout">
     <div id="error" class="error" role="alert" hidden></div>
 
     <!-- 1. Choose input & transcribe -->
-    <section class="card">
-      <h2>1. Choose input</h2>
+    <section class="card card-input">
+      <div class="card-head">
+        <span class="step">1</span>
+        <div>
+          <h2>Choose input</h2>
+          <p class="card-sub">Upload audio or paste a YouTube link</p>
+        </div>
+      </div>
+
       <div class="tabs" role="radiogroup" aria-label="Input type">
-        <label><input type="radio" name="source" value="file" checked> Audio file</label>
-        <label><input type="radio" name="source" value="youtube"> YouTube link</label>
+        <label>
+          <input type="radio" name="source" value="file" checked>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Audio file
+        </label>
+        <label>
+          <input type="radio" name="source" value="youtube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z" fill="currentColor"/></svg>
+          YouTube link
+        </label>
       </div>
 
       <div id="file-panel">
         <label id="drop-zone" class="drop-zone" for="file-input">
-          <span>Drag an audio file here, or</span>
-          <span class="button secondary">Choose file</span>
+          <span class="drop-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
+          </span>
+          <span class="drop-title">Drag &amp; drop your audio here</span>
+          <span class="drop-or">or</span>
+          <span class="button secondary">Browse files</span>
+          <span class="drop-hint">WAV · MP3 · M4A · FLAC · OGG · WEBM</span>
           <input id="file-input" type="file" accept=".wav,.mp3,.m4a,.flac,.ogg,.webm,audio/*">
         </label>
-        <p class="muted">Selected: <span id="file-name">none</span></p>
+        <p class="file-chip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+          <span>Selected: <span id="file-name">none</span></span>
+        </p>
       </div>
 
       <div id="youtube-panel" hidden>
-        <label class="field">YouTube video URL
-          <input id="youtube-url" type="url" maxlength="2048" placeholder="https://www.youtube.com/watch?v=...">
+        <label class="field">
+          <span class="field-label">YouTube video URL</span>
+          <input id="youtube-url" type="url" inputmode="url" autocomplete="off" maxlength="2048" placeholder="https://www.youtube.com/watch?v=...">
         </label>
         <label class="checkbox">
           <input id="prefer-captions" type="checkbox" checked>
-          Use the video's captions when available (faster); otherwise download audio and transcribe with Whisper
+          <span>Use the video's captions when available (faster); otherwise download audio and transcribe with Whisper</span>
         </label>
       </div>
 
-      <button id="transcribe-btn" type="button" disabled>Transcribe</button>
+      <button id="transcribe-btn" type="button" class="primary block" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+        Transcribe
+      </button>
       <p id="transcribe-progress" class="progress" hidden>
         <span class="spinner" aria-hidden="true"></span><span id="transcribe-progress-text">Uploading…</span>
       </p>
     </section>
 
-    <!-- 2. Transcript -->
-    <section class="card">
-      <h2>2. Transcript</h2>
-      <p id="transcript-meta" class="muted">No transcript yet.</p>
-      <div id="transcript-text" class="text-box" aria-live="polite"></div>
-      <details id="segments-details" hidden>
-        <summary>Timestamped segments</summary>
-        <ol id="segments-list" class="segments"></ol>
-      </details>
-      <div class="actions">
-        <button type="button" class="secondary" data-download="transcript" data-format="txt" disabled>Download TXT</button>
-        <button type="button" class="secondary" data-download="transcript" data-format="md" disabled>Download Markdown</button>
-      </div>
-    </section>
+    <div class="results">
+      <!-- 2. Transcript -->
+      <section class="card">
+        <div class="card-head">
+          <span class="step">2</span>
+          <div>
+            <h2>Transcript</h2>
+            <p id="transcript-meta" class="card-sub">No transcript yet.</p>
+          </div>
+        </div>
+        <div id="transcript-text" class="text-box" aria-live="polite"></div>
+        <details id="segments-details" hidden>
+          <summary>Timestamped segments</summary>
+          <ol id="segments-list" class="segments"></ol>
+        </details>
+        <div class="actions">
+          <button type="button" class="secondary" data-download="transcript" data-format="txt" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>
+            TXT
+          </button>
+          <button type="button" class="secondary" data-download="transcript" data-format="md" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>
+            Markdown
+          </button>
+        </div>
+      </section>
 
-    <!-- 3. Summary -->
-    <section class="card">
-      <h2>3. Summary</h2>
-      <div class="row">
-        <label>Type
-          <select id="summary-type">
-            <option value="brief">Brief</option>
-            <option value="detailed">Detailed</option>
-            <option value="meeting_notes">Meeting Notes</option>
-          </select>
-        </label>
-        <label>Output language (optional)
-          <input id="output-language" type="text" maxlength="40" placeholder="e.g. English">
-        </label>
-      </div>
-      <button id="summarize-btn" type="button" disabled>Summarize</button>
-      <p id="summarize-progress" class="progress" hidden>
-        <span class="spinner" aria-hidden="true"></span><span>Generating summary…</span>
-      </p>
-      <div id="summary-output" class="summary"></div>
-      <div class="actions">
-        <button type="button" class="secondary" data-download="summary" data-format="md" disabled>Download Markdown</button>
-        <button type="button" class="secondary" data-download="summary" data-format="txt" disabled>Download TXT</button>
-      </div>
-    </section>
+      <!-- 3. Summary -->
+      <section class="card">
+        <div class="card-head">
+          <span class="step">3</span>
+          <div>
+            <h2>Summary</h2>
+            <p class="card-sub">Pick a style and generate</p>
+          </div>
+        </div>
+        <div class="row">
+          <label class="field">
+            <span class="field-label">Type</span>
+            <select id="summary-type">
+              <option value="brief">Brief</option>
+              <option value="detailed">Detailed</option>
+              <option value="meeting_notes">Meeting Notes</option>
+            </select>
+          </label>
+          <label class="field">
+            <span class="field-label">Output language <em>(optional)</em></span>
+            <input id="output-language" type="text" maxlength="40" placeholder="e.g. English">
+          </label>
+        </div>
+        <button id="summarize-btn" type="button" class="primary block" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 17v4M17 19h4"/></svg>
+          Summarize
+        </button>
+        <p id="summarize-progress" class="progress" hidden>
+          <span class="spinner" aria-hidden="true"></span><span>Generating summary…</span>
+        </p>
+        <div id="summary-output" class="summary"></div>
+        <div class="actions">
+          <button type="button" class="secondary" data-download="summary" data-format="md" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>
+            Markdown
+          </button>
+          <button type="button" class="secondary" data-download="summary" data-format="txt" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M7 11l5 5 5-5M4 20h16"/></svg>
+            TXT
+          </button>
+        </div>
+      </section>
+    </div>
   </main>
+
+  <footer class="site-footer">
+    <p>Transmint · Whisper transcription &amp; AI summaries</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
